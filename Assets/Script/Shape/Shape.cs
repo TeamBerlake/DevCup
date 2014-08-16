@@ -44,6 +44,7 @@ public class Shape : MonoBehaviour {
 	[SerializeField]
 	protected	ShapeColor	m_color			= ShapeColor.Grey;
 	protected	bool		m_canBeMoved	= true;
+	protected	bool		m_isObstructed	= false;
 
 	#endregion // Universal Variables
 

@@ -20,6 +20,10 @@ public class Circle : Shape {
 
 		if (m_canBeMoved)
 		{
+			// If the circle is obstructed by another object, it will not move.
+			if (m_isObstructed)
+				return;
+
 			Vector3 move = this.gameObject.transform.position;
 			move.y -= m_speed*Time.deltaTime;
 			if (move.y < Camera.main.ViewportToWorldPoint(new Vector2(0.0f, -.5f)).y)
