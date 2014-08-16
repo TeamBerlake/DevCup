@@ -5,7 +5,7 @@ public class Circle : Shape {
 
 	#region variables
 
-	private	const	float	m_speed		= 2.0f;
+	private	const	float	m_speed		= 10.0f;
 
 	#endregion // variables
 

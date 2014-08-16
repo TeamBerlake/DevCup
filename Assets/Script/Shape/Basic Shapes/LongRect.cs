@@ -6,7 +6,7 @@ public class LongRect : Shape
 	
 	#region variables
 	
-	private	const	float	m_speed		= 4.0f;
+	private	const	float	m_speed		= 10.0f;
 	
 	#endregion // variables
 	
