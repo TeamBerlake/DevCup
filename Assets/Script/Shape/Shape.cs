@@ -51,7 +51,7 @@ public class Shape : MonoBehaviour {
 	#region Monobehavior Functions
 
 	// Use this for initialization
-	void Start () 
+	private void Start () 
 	{
 		if (m_color == ShapeColor.Grey)
 			m_canBeMoved = false;
@@ -60,7 +60,7 @@ public class Shape : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	private void Update ()
 	{
 		foreach (Transform t in transform.GetComponentsInChildren<Transform>())
 		{
@@ -73,6 +73,14 @@ public class Shape : MonoBehaviour {
 	protected virtual void _Update ()
 	{
 
+	}
+
+	private void OnTriggerEnter (Collider col)
+	{
+		Shape s = col.GetComponent<Shape>();
+		if (s == null)
+		{
+		}
 	}
 
 	#endregion // Monobehavior Functions
