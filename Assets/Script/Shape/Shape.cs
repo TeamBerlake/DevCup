@@ -43,8 +43,7 @@ public class Shape : MonoBehaviour {
 
 	[SerializeField]
 	protected	ShapeColor	m_color			= ShapeColor.Grey;
-	[SerializeField]
-	protected	bool		m_canBeMoved	= false;
+	protected	bool		m_canBeMoved	= true;
 
 	#endregion // Universal Variables
 
@@ -53,11 +52,26 @@ public class Shape : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		if (m_color == ShapeColor.Grey)
+			m_canBeMoved = false;
+		else
+			m_canBeMoved = true;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update ()
+	{
+		foreach (Transform t in transform.GetComponentsInChildren<Transform>())
+		{
+			if (t.renderer != null)
+				t.renderer.material.color = ToColor(m_color);
+		}
+		_Update();
+	}
+
+	protected virtual void _Update ()
+	{
+
 	}
 
 	#endregion // Monobehavior Functions
@@ -128,8 +142,6 @@ public class Shape : MonoBehaviour {
 		set 
 		{
 			m_color = value;
-			foreach (Transform t in transform.GetComponentsInChildren<Transform>())
-				t.renderer.material.color = ToColor(value);
 			if (value == ShapeColor.Grey)
 				m_canBeMoved = false;
 		}

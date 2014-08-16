@@ -29,12 +29,7 @@ public class Heart : MonoBehaviour
 	public Shape.ShapeColor HeartColor
 	{
 		get {return color;}
-		set 
-		{
-			color = value;
-			foreach (Transform t in transform.GetComponentsInChildren<Transform>())
-				t.renderer.material.color = ToColor(value);
-		}
+		set {color = value;}
 	}
 
 	void OnTriggerEnter (Collider col)
@@ -61,5 +56,14 @@ public class Heart : MonoBehaviour
 
 		if (shape.CurrentColor == color)
 			Destroy (gameObject);
+	}
+
+	void Update ()
+	{
+		foreach (Transform t in transform.GetComponentsInChildren<Transform>())
+		{
+			if (t.renderer != null)
+				t.renderer.material.color = ToColor(color);
+		}
 	}
 }

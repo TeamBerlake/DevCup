@@ -11,14 +11,9 @@ public class LongRect : Shape
 	#endregion // variables
 	
 	#region Monobehavior Functions
-
-	private void Start ()
-	{
-		Initialize(Vector3.zero, ShapeColor.Blue, true);
-	}
 	
 	// Update is called once per frame
-	void Update () 
+	protected override void _Update () 
 	{
 		//apply state
 		if (!Main.Instance.IsPlaying)
