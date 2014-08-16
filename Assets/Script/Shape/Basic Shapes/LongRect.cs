@@ -15,16 +15,14 @@ public class LongRect : Shape
 	// Update is called once per frame
 	protected override void _Update () 
 	{
-		//apply state
-		if (!Main.Instance.IsPlaying)
-			return;
-
 		if (m_canBeMoved)
 		{
 			Vector3 move = this.gameObject.transform.position;
 			move.x += m_speed*Time.deltaTime;
-			if (move.x > Camera.main.ViewportToWorldPoint(new Vector2(1.5f, 0.0f)).x)
-				move.x = 0;
+			if (move.x > Camera.main.ViewportToWorldPoint(new Vector2(1.1f, 0f)).x)
+			{
+				move.x = Camera.main.ViewportToWorldPoint(new Vector2(1.1f, 0f)).x;
+			}
 			this.gameObject.transform.position = move;
 		}
 	}

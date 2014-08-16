@@ -47,7 +47,7 @@ public class Main : MonoBehaviour
 		s_currentLevel = Application.loadedLevel;
 		s_inputs = new Dictionary<KeyCode, DInput>();
 		DontDestroyOnLoad(this);
-		_Reset();
+		_Stop();
 	}
 
 	void Update ()
@@ -66,18 +66,20 @@ public class Main : MonoBehaviour
 
 	void OnGUI ()
 	{
-		if (GUI.Button(new Rect(Screen.width - 80, 0, 80, 80), s_status))
-		{
-			if (IsPlaying)
-				_Stop ();
-			else
-				_Play ();
-		}
-		
 		if (s_nextLevelUnlocked)
 		{
 			if (GUI.Button(new Rect(Screen.width - 240, 0, 160, 80), "NEXT LEVEL"))
 				_NextLevel();
+		}
+		else
+		{
+			if (GUI.Button(new Rect(Screen.width - 80, 0, 80, 80), s_status))
+			{
+				if (IsPlaying)
+					_Stop ();
+				else
+					_Play ();
+			}
 		}
 	}
 
@@ -96,11 +98,15 @@ public class Main : MonoBehaviour
 	
 	private void _NextLevel ()
 	{
+		if (!s_nextLevelUnlocked)
+			return;
+
 		if (s_currentLevel < Application.levelCount-1)
 		{
 			s_inputs = new Dictionary<KeyCode,DInput>();
-			Application.LoadLevel(++s_currentLevel);
 			s_nextLevelUnlocked = false;
+
+			Application.LoadLevel(++s_currentLevel);
 		}
 	}
 

@@ -14,21 +14,13 @@ public class Circle : Shape {
 	// Update is called once per frame
 	protected override void _Update ()
 	{
-		//apply state
-		if (!Main.Instance.IsPlaying)
-			return;
-
 		if (m_canBeMoved)
 		{
-			// If the circle is obstructed by another object, it will not move.
-			if (m_isObstructed)
-				return;
-
 			Vector3 move = this.gameObject.transform.position;
 			move.y -= m_speed*Time.deltaTime;
-			if (move.y < Camera.main.ViewportToWorldPoint(new Vector2(0.0f, -.5f)).y)
+			if (move.y < Camera.main.ViewportToWorldPoint(new Vector2(0.0f, -.1f)).y)
 			{
-				move.y = 0;
+				move.y = Camera.main.ViewportToWorldPoint(new Vector2(0.0f, -.1f)).y;
 			}
 			this.gameObject.transform.position = move;
 		}

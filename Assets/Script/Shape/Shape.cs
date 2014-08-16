@@ -5,6 +5,12 @@ public class Shape : MonoBehaviour {
 
 	#region Enums
 
+	protected enum MoveState
+	{
+		INACTIVE,
+		ACTIVE
+	}
+
 	public enum ShapeColor
 	{
 		Red,
@@ -44,14 +50,13 @@ public class Shape : MonoBehaviour {
 	[SerializeField]
 	protected	ShapeColor	m_color			= ShapeColor.Grey;
 	protected	bool		m_canBeMoved	= true;
-	protected	bool		m_isObstructed	= false;
 
 	#endregion // Universal Variables
 
 	#region Monobehavior Functions
 
 	// Use this for initialization
-	private void Start () 
+	void Start () 
 	{
 		if (m_color == ShapeColor.Grey)
 			m_canBeMoved = false;
@@ -60,27 +65,39 @@ public class Shape : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	private void Update ()
+	void Update ()
 	{
 		foreach (Transform t in transform.GetComponentsInChildren<Transform>())
 		{
 			if (t.renderer != null)
 				t.renderer.material.color = ToColor(m_color);
 		}
+		
+		if (!Main.Instance.IsPlaying)
+			return;
 		_Update();
+	}
+
+	void OnTriggerEnter (Collider col)
+	{
+		Shape shape = col.transform.parent.GetComponent<Shape>();
+		if (shape == null)
+			return;
+
+		if(!shape.CanBeMoved)
+		{
+			shape.CurrentColor = m_color;
+			shape.CanBeMoved = true;
+		}
+
+		ShapeColor woot = m_color;
+		MixColor(shape.CurrentColor);
+		shape.MixColor(woot);
 	}
 
 	protected virtual void _Update ()
 	{
 
-	}
-
-	private void OnTriggerEnter (Collider col)
-	{
-		Shape s = col.GetComponent<Shape>();
-		if (s == null)
-		{
-		}
 	}
 
 	#endregion // Monobehavior Functions
@@ -143,6 +160,7 @@ public class Shape : MonoBehaviour {
 	public bool CanBeMoved
 	{
 		get {return m_canBeMoved;}
+		set {m_canBeMoved = value;}
 	}
 
 	public ShapeColor CurrentColor
