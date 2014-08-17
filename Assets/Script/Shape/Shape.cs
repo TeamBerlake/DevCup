@@ -11,32 +11,40 @@ public class Shape : MonoBehaviour {
 		ACTIVE
 	}
 
+	protected enum MoveDirection
+	{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	}
+
 	public enum ShapeColor
 	{
-		Red,
-		Yellow,
-		Blue,
-		Green,
-		Orange,
-		Purple,
-		Grey
+		RED,
+		YELLOW,
+		BLUE,
+		GREEN,
+		ORANGE,
+		PURPLE,
+		GREY
 	}
 
 	public static Color ToColor (ShapeColor sc)
 	{
 		switch (sc)
 		{
-		case ShapeColor.Blue:
+		case ShapeColor.BLUE:
 			return Color.blue;
-		case ShapeColor.Green:
+		case ShapeColor.GREEN:
 			return Color.green;
-		case ShapeColor.Grey:
+		case ShapeColor.GREY:
 			return Color.gray;
-		case ShapeColor.Purple:
+		case ShapeColor.PURPLE:
 			return new Color(1.0f,0.0f,1.0f,1.0f);
-		case ShapeColor.Red:
+		case ShapeColor.RED:
 			return Color.red;
-		case ShapeColor.Orange:
+		case ShapeColor.ORANGE:
 			return new Color(1.0f,0.5f,0.0f,1.0f);
 		default:
 			return Color.white;
@@ -48,7 +56,7 @@ public class Shape : MonoBehaviour {
 	#region Universal Variables
 
 	[SerializeField]
-	protected	ShapeColor	m_color			= ShapeColor.Grey;
+	protected	ShapeColor	m_color			= ShapeColor.GREY;
 	protected	bool		m_canBeMoved	= true;
 
 	#endregion // Universal Variables
@@ -58,7 +66,7 @@ public class Shape : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		if (m_color == ShapeColor.Grey)
+		if (m_color == ShapeColor.GREY)
 			m_canBeMoved = false;
 		else
 			m_canBeMoved = true;
@@ -80,6 +88,7 @@ public class Shape : MonoBehaviour {
 
 	void OnTriggerEnter (Collider col)
 	{
+		// Default behavior
 		Shape shape = col.transform.parent.GetComponent<Shape>();
 		if (shape == null)
 			return;
@@ -90,12 +99,29 @@ public class Shape : MonoBehaviour {
 			shape.CanBeMoved = true;
 		}
 
-		ShapeColor woot = m_color;
+		ShapeColor oldColor = m_color;
 		MixColor(shape.CurrentColor);
-		shape.MixColor(woot);
+		shape.MixColor(oldColor);
+
+		_OnTriggerEnter(col);
+	}
+
+	void OnTriggerExit ()
+	{
+		_OnTriggerExit();
 	}
 
 	protected virtual void _Update ()
+	{
+
+	}
+
+	protected virtual void _OnTriggerEnter (Collider col)
+	{
+
+	}
+
+	protected virtual void _OnTriggerExit ()
 	{
 
 	}
@@ -107,43 +133,43 @@ public class Shape : MonoBehaviour {
 	private ShapeColor _CombineColors (ShapeColor color1, ShapeColor color2)
 	{
 		ShapeColor product = color1;
-		if (color1 == ShapeColor.Red)
+		if (color1 == ShapeColor.RED)
 		{
 			switch (color2)
 			{
-			case ShapeColor.Blue:
-				product = ShapeColor.Purple;
+			case ShapeColor.BLUE:
+				product = ShapeColor.PURPLE;
 				break;
-			case ShapeColor.Yellow:
-				product = ShapeColor.Orange;
+			case ShapeColor.YELLOW:
+				product = ShapeColor.ORANGE;
 				break;
 			default:
 				break;
 			}
 		}
-		else if (color1 == ShapeColor.Yellow)
+		else if (color1 == ShapeColor.YELLOW)
 		{
 			switch (color2)
 			{
-			case ShapeColor.Blue:
-				product = ShapeColor.Green;
+			case ShapeColor.BLUE:
+				product = ShapeColor.GREEN;
 				break;
-			case ShapeColor.Red:
-				product = ShapeColor.Orange;
+			case ShapeColor.RED:
+				product = ShapeColor.ORANGE;
 				break;
 			default:
 				break;
 			}
 		}
-		else if (color1 == ShapeColor.Blue)
+		else if (color1 == ShapeColor.BLUE)
 		{
 			switch (color2)
 			{
-			case ShapeColor.Yellow:
-				product = ShapeColor.Green;
+			case ShapeColor.YELLOW:
+				product = ShapeColor.GREEN;
 				break;
-			case ShapeColor.Red:
-				product = ShapeColor.Purple;
+			case ShapeColor.RED:
+				product = ShapeColor.PURPLE;
 				break;
 			default:
 				break;
@@ -169,7 +195,7 @@ public class Shape : MonoBehaviour {
 		set 
 		{
 			m_color = value;
-			if (value == ShapeColor.Grey)
+			if (value == ShapeColor.GREY)
 				m_canBeMoved = false;
 		}
 	}
@@ -189,7 +215,7 @@ public class Shape : MonoBehaviour {
 		}
 		else
 		{
-			m_color = ShapeColor.Grey;
+			m_color = ShapeColor.GREY;
 		}
 
 		if (this.gameObject != null)

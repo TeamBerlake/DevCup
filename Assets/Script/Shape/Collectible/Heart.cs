@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Heart : MonoBehaviour
@@ -7,17 +7,17 @@ public class Heart : MonoBehaviour
 	{
 		switch (sc)
 		{
-		case Shape.ShapeColor.Blue:
+		case Shape.ShapeColor.BLUE:
 			return Color.blue;
-		case Shape.ShapeColor.Green:
+		case Shape.ShapeColor.GREEN:
 			return Color.green;
-		case Shape.ShapeColor.Grey:
+		case Shape.ShapeColor.GREY:
 			return Color.gray;
-		case Shape.ShapeColor.Purple:
+		case Shape.ShapeColor.PURPLE:
 			return new Color(1.0f,0.0f,1.0f,1.0f);
-		case Shape.ShapeColor.Red:
+		case Shape.ShapeColor.RED:
 			return Color.red;
-		case Shape.ShapeColor.Orange:
+		case Shape.ShapeColor.ORANGE:
 			return new Color(1.0f,0.5f,0.0f,1.0f);
 		default:
 			return Color.white;
@@ -25,7 +25,7 @@ public class Heart : MonoBehaviour
 	}
 
 	[SerializeField]
-	Shape.ShapeColor color = Shape.ShapeColor.Grey;
+	Shape.ShapeColor color = Shape.ShapeColor.GREY;
 	public Shape.ShapeColor HeartColor
 	{
 		get {return color;}

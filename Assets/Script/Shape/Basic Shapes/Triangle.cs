@@ -5,17 +5,19 @@ public class Triangle : Shape {
 
 	#region variables
 	
-	private	const	float	m_speed			= 64.0f;
-	private			Vector3	m_center		= Vector3.zero;
+	private	const	float		m_speed			= 64.0f;
+	private			Vector3		m_pivot			= Vector3.zero;
 
 	#endregion // variables
+
+	#region Scene References
+
+	[SerializeField]
+	private			Transform	m_pivotTform	= null;
+
+	#endregion // Scene References
 	
 	#region Monobehavior Functions
-	
-	private void Start ()
-	{
-		m_center = this.transform.position + Vector3.one;
-	}
 	
 	// Update is called once per frame
 	protected override void _Update () 
@@ -23,7 +25,7 @@ public class Triangle : Shape {
 		//apply state
 		if (m_canBeMoved)
 		{
-			this.transform.RotateAround(m_center, Vector3.forward, (m_speed*Time.deltaTime));
+			this.transform.RotateAround(m_pivotTform.position, Vector3.forward, (m_speed*Time.deltaTime));
 		}
 	}
 	
